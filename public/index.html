@@ -37,7 +37,7 @@
 	</style>
 </head>
 <body>
-	<button onclick="openLeft()">Garage Door</button>
+	<button id="button" onclick="openLeft()">Garage Door</button>
 <!-- 	<button onclick="openRight()">Right Garage</button>
 	<button onclick="openBoth()">Both Garages</button>
  -->
@@ -65,13 +65,19 @@
 
 		var CLOSED = 0,
 			state = "",
-			statusEl = document.getElementById("doorStatus");
+			buttonStr = "",
+			statusEl = document.getElementById("doorStatus"),
+			buttonEl = document.getElementById("button");
+
 		if (this.responseText == CLOSED){
 			state = "closed";
+			buttonStr = "Open door";
 		} else {
 			state = "open";
+			buttonStr = "Close door";
 		}
 
+		buttonEl.innerHTML =buttonStr;
 		statusEl.innerHTML = state;
 	}
 
