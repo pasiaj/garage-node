@@ -31,11 +31,17 @@ app.get("/api/ping", function(req, res) {
 });
 
 app.get("/api/garage/doorStatus", function(req, res) {
-	var doorStatus;
-	rpio.open(config.DOOR_SENSOR_PIN, rpio.INPUT);
-	doorStatus = rpio.read(config.DOOR_SENSOR_PIN);
-	rpio.close(config.DOOR_SENSOR_PIN);
-	res.json(doorStatus);
+	var doorStatus = { openPin: "", closedPin: ""} ;
+
+	rpio.open(config.DOOR_OPEN_PIN, rpio.INPUT);
+	doorStatus.openPin = rpio.read(config.DOOR_CLOSED_PIN);
+	rpio.close(config.DOOR_OPEN_PIN);
+
+	rpio.open(config.DOOR_CLOSED_PIN, rpio.INPUT);
+	doorStatus.closedPin = rpio.read(config.DOOR_CLOSED_PIN);
+	rpio.close(config.DOOR_CLOSED_PIN);
+
+	res.json( doorStatus );
 });
 
 

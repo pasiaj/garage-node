@@ -63,18 +63,25 @@
 
 	function reqListener () {
 
-		var CLOSED = 0,
+		var LOW = 0,
 			state = "",
 			buttonStr = "",
+			doorStatus = JSON.parse(this.responseText);
 			statusEl = document.getElementById("doorStatus"),
 			buttonEl = document.getElementById("button");
 
-		if (this.responseText == CLOSED){
-			state = "closed";
-			buttonStr = "Open door";
-		} else {
-			state = "open";
+		if ( doorStatus.openPin === 1 && doorStatus.closedPin === 0) {
+			state = "open."
 			buttonStr = "Close door";
+		} else if ( doorStatus.openPin === 0 && doorStatus.closedPin === 1) {
+			state = "open."
+			buttonStr = "Close door";
+		} else if ( doorStatus.openPin === 1 && doorStatus.closedPin === 1) {
+			state = "in transition."
+			buttonStr = "Toggle door";
+		} else {
+			state = "in an unknown state. Malfunction in one ore more sensors."
+			buttonStr = "Toggle door";
 		}
 
 		buttonEl.innerHTML =buttonStr;
