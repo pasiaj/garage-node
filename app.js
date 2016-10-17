@@ -10,6 +10,13 @@ app.set('port', process.env.PORT || 3000);
 
 app.use('/', express.static(__dirname + '/public'));
 
+var options = {
+        gpiomem: true,          /* Use /dev/gpiomem */
+        mapping: 'physical',    /* Use the P1-P40 numbering scheme */
+}
+
+rpio.init( options );
+
 function delayPinWrite(pin, value, callback) {
 	setTimeout(function() {
 		rpio.write(pin, value);
@@ -26,7 +33,7 @@ app.post("/api/garage/left", function(req, res) {
 	async.series([
 		function(callback) {
 			// Open pin for output
-			rpio.open(config.LEFT_GARAGE_PIN, rpio.OUTPUT);
+			rpio.open(config.LEFT_GARAGE_PIN, rpio.OUTPUT, rpio.LOW);
 			callback();
 			//gpio.open(config.LEFT_GARAGE_PIN, "output", callback);
 		},
