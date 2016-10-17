@@ -44,11 +44,11 @@
 
 	<div class="sensor">Door is <span class="doorStatus" id="doorStatus"></span></div>
 
-
 	<script>
 
 	function postListener() {
-		body.focus();
+		document.getElementsByTagName("button")[0].blur();
+		console.log('palautui');
 	}
 
 	function post(url) {
