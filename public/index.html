@@ -47,8 +47,13 @@
 
 	<script>
 
+	function postListener() {
+		body.focus();
+	}
+
 	function post(url) {
 		var request = new XMLHttpRequest();
+		request.addEventListener("load", postlistener);
 		request.open('POST', url, true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 		request.send({});
@@ -57,6 +62,7 @@
 	function openLeft() { post("/api/garage/left"); }
 
 	function reqListener () {
+
 		var CLOSED = 0,
 			state = "",
 			statusEl = document.getElementById("doorStatus");
@@ -70,10 +76,13 @@
 	}
 
 	function testDoorStatus(){
+
 		var oReq = new XMLHttpRequest();
+
 		oReq.addEventListener("load", reqListener);
 		oReq.open("GET", "/api/garage/doorStatus");
 		oReq.send();
+
 	}
 
 	setInterval(testDoorStatus, 1000);
