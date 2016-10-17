@@ -71,8 +71,8 @@
 			buttonEl = document.getElementById("button");
 
 		if ( doorStatus.openPin === 1 && doorStatus.closedPin === 0) {
-			state = "open."
-			buttonStr = "Close door";
+			state = "closed."
+			buttonStr = "Open door";
 		} else if ( doorStatus.openPin === 0 && doorStatus.closedPin === 1) {
 			state = "open."
 			buttonStr = "Close door";
