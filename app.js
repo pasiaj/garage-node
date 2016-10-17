@@ -25,23 +25,25 @@ function delayPinWrite(pin, value, callback) {
 	}, config.RELAY_TIMEOUT);
 }
 
-function testDoorPosition(){
-	console.log("Door position is ", rpio.read(config.DOOR_SENSOR_PIN));
-}
 
 app.get("/api/ping", function(req, res) {
 	res.json("pong");
 });
+
+app.get("/api/garage/doorStatus", function(req, res) {
+	var doorStatus;
+	rpio.open(config.DOOR_SENSOR_PIN, rpio.INPUT);
+	doorStatus = rpio.read(config.DOOR_SENSOR_PIN);
+	rpio.close(config.DOOR_SENSOR_PIN);
+	res.json(doorStatus);
+});
+
 
 app.post("/api/garage/left", function(req, res) {
 	async.series([
 		function(callback) {
 			// Open pin for output
 			rpio.open(config.GARAGE_PIN, rpio.OUTPUT, rpio.LOW);
-
-			rpio.open(config.DOOR_SENSOR_PIN, rpio.INPUT);
-
-			setInterval(testDoorPosition, 1000);
 			callback();
 			//gpio.open(config.GARAGE_PIN, "output", callback);
 		},
