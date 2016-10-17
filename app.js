@@ -34,7 +34,7 @@ app.get("/api/garage/doorStatus", function(req, res) {
 	var doorStatus = { openPin: "", closedPin: ""} ;
 
 	rpio.open(config.DOOR_OPEN_PIN, rpio.INPUT);
-	doorStatus.openPin = rpio.read(config.DOOR_CLOSED_PIN);
+	doorStatus.openPin = rpio.read(config.DOOR_OPEN_PIN);
 	rpio.close(config.DOOR_OPEN_PIN);
 
 	rpio.open(config.DOOR_CLOSED_PIN, rpio.INPUT);
