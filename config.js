@@ -1,7 +1,7 @@
 var config = {};
 
-config.LEFT_GARAGE_PIN = 36;
-config.RIGHT_GARAGE_PIN = 11;
+config.GARAGE_PIN = 36;
+config.DOOR_SENSOR_PIN = 11;
 
 config.RELAY_ON = 0;
 config.RELAY_OFF = 1;
