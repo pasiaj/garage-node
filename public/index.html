@@ -5,6 +5,8 @@
 	<title>Pasi's Garage</title>
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimal-ui">
 	<link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="blacki-translucent">
 	<style>
 	html, body, div, button {
 		margin: 0;
@@ -26,6 +28,16 @@
 		height: 44px;
 	}
 
+	button.hide, button.show {
+		margin: 30px auto;
+		text-align: center;
+		background: none;
+		height: 240px;
+		width: 320px;
+		font-size: 0.7em;
+		display: block;
+	}
+
 	.sensor {
 		margin: 30px;
 		text-align: center;
@@ -34,21 +46,39 @@
 	.doorStatus {
 		font-weight: 700;
 	}
+	
+	#doorImage { 
+		display: none;
+		width: 320px;
+		height: 240px;
+		margin: 30px auto;
+	}
+
+	.visible #doorImage {
+		display: block;
+	}
+	
+	button.hide { display: none; }
+	.visible .hide { display: block; }
+	.visible .show { display: none; }
+	
 	</style>
 </head>
 <body>
 	<button id="button" onclick="openLeft()">Garage Door</button>
-<!-- 	<button onclick="openRight()">Right Garage</button>
-	<button onclick="openBoth()">Both Garages</button>
- -->
 
 	<div class="sensor">Door is <span class="doorStatus" id="doorStatus"></span></div>
+
+	<div id="image">
+		<button class="show" onclick="showImage()">Show camera</button>
+		<!-- <button class="hide" onclick="hideImage()">Hide camera</button> -->
+		<img id="doorImage" onclick="hideImage()" src="/image" />
+	</div>		
 
 	<script>
 
 	function postListener() {
 		document.getElementsByTagName("button")[0].blur();
-		console.log('palautui');
 	}
 
 	function post(url) {
@@ -104,6 +134,24 @@
 	// function openRight() { post("/api/garage/right"); }
 
 	// function openBoth() { post("/api/garage/both"); }
+
+	function reloadImage() {
+		var imageEl = document.getElementById("doorImage");
+		imageEl.src = "/image?" + new Date().getTime();
+	}
+
+	function showImage(){
+		reloadImage();
+		var containerEl = document.getElementById("image");
+		containerEl.className = "image visible";
+		
+		setInterval(reloadImage, 2000);
+	}
+	function hideImage(){
+		var containerEl = document.getElementById("image");
+		containerEl.classList.remove("visible");
+	}
+	setTimeout(function() { window.location.href = "http://pasiaj.com" }, 180000);
 
 	</script>
 
